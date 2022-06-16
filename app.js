@@ -26,15 +26,17 @@ app.post('/',(req,res)=> {
 //API -2
 app.get('/', (req,res)=> {
     const K = Number(req.query.K);
-    const N = req.query.N;
+    const N = Number(req.query.N);
     fs.readFile('numbers.json', (err, data) => {
         if (err) throw err;
         const loadedNumbers =  JSON.parse(data);
-        const slicedNumber = loadedNumbers.slice(0,N);
-        if(slicedNumber.includes(K)) {
-            res.status(200).json({data: K});
+        const slicedNumber = loadedNumbers.slice(N); //Slice array from Nth postion
+        const largestInteger = slicedNumber.sort((a,b)=> b - a); //Sort Integer from sliced List
+        const largestIntegerIndex = loadedNumbers.indexOf(Number(largestInteger[0])) //Find index of largestNumber from List
+        if(largestIntegerIndex && largestInteger[0]) {
+            res.status(200).json({largestInteger: largestInteger[0] , largestIntegerIndex: largestIntegerIndex});
         } else {
-            res.status(200).json({data: -1});
+            res.status(200).json({largestIntegerIndex: -1});
         }
     });
     
