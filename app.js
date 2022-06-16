@@ -23,6 +23,7 @@ app.post('/',(req,res)=> {
    
 })
 
+
 //API -2
 app.get('/', (req,res)=> {
     const K = Number(req.query.K);
